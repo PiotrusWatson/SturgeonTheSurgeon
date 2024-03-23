@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxl365ubsd526"]
+
+[ext_resource type="Script" path="res://Scripts/dialogue_player.gd" id="1_k8ne8"]
+
+[node name="DialoguePlayer" type="Node"]
+script = ExtResource("1_k8ne8")

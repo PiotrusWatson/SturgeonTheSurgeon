@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dtbb65j5p3il1"]
+
+[ext_resource type="Script" path="res://Scripts/scene_changer.gd" id="1_11mxy"]
+[ext_resource type="Script" path="res://intro_dialogue.gd" id="1_r342v"]
+[ext_resource type="PackedScene" uid="uid://bxl365ubsd526" path="res://Components/dialogue_player.tscn" id="2_rehjw"]
+
+[node name="IntroDialogue" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r342v")
+
+[node name="scene_changer" type="Node" parent="."]
+script = ExtResource("1_11mxy")
+
+[node name="DialoguePlayer" parent="." instance=ExtResource("2_rehjw")]
+
+[connection signal="dialogue_finished" from="DialoguePlayer" to="." method="_on_dialogue_player_dialogue_finished"]

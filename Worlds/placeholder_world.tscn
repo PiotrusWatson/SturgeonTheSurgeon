@@ -33,8 +33,8 @@ follow_parameters/target_offset = Vector3(0, 0, 2)
 [node name="Sturgeon" parent="." instance=ExtResource("3_f2g2f")]
 
 [node name="Camera" parent="." instance=ExtResource("3_gu1xy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-fov = 74.9824
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+fov = 75.0
 
 [node name="Lights" type="Node3D" parent="."]
 

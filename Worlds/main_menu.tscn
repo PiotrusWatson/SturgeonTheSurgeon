@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://mbowpo00b2nx"]
 
 [ext_resource type="Theme" uid="uid://d12d7vr373ff0" path="res://Themes/placeholder_theme.tres" id="1_nafy8"]
-[ext_resource type="Script" path="res://Worlds/scene_changer.gd" id="2_l8i6x"]
+[ext_resource type="PackedScene" uid="uid://bbhn8lya2i3af" path="res://Components/scene_changer.tscn" id="2_q5a1x"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -34,8 +34,7 @@ grow_vertical = 2
 theme = ExtResource("1_nafy8")
 text = "sturgeon the surgeon :)"
 
-[node name="SceneChanger" type="Node" parent="."]
-script = ExtResource("2_l8i6x")
+[node name="SceneChanger" parent="." instance=ExtResource("2_q5a1x")]
 
 [node name="PlayButton" type="Button" parent="."]
 layout_mode = 1
@@ -52,5 +51,3 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 50
 text = "Play 🐟🔪"
-
-[connection signal="pressed" from="PlayButton" to="SceneChanger" method="_on_play_button_pressed"]
