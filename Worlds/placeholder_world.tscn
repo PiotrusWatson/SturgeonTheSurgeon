@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://br6001rkvol02"]
+
+[ext_resource type="Script" path="res://Scripts/signals.gd" id="1_7mlbk"]
+[ext_resource type="PackedScene" uid="uid://djxtqs8xsdhl1" path="res://Scenes/camera_guider.tscn" id="2_161nh"]
+[ext_resource type="PackedScene" uid="uid://csq1tddsa3c45" path="res://Scenes/sturgeon.tscn" id="3_f2g2f"]
+[ext_resource type="PackedScene" uid="uid://dt85vuq8yhkxm" path="res://Scenes/camera.tscn" id="3_gu1xy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hfutf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bnlpn"]
+albedo_color = Color(1, 0.0901961, 1, 1)
+
+[node name="PlaceholderWorld" type="Node3D"]
+script = ExtResource("1_7mlbk")
+
+[node name="Landscape" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="OuterWalls" type="CSGBox3D" parent="Landscape"]
+size = Vector3(25, 25, 25)
+material = SubResource("StandardMaterial3D_hfutf")
+
+[node name="InnerWalls" type="CSGBox3D" parent="Landscape"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.60925, 0.879303, 0.15152)
+operation = 2
+size = Vector3(20.6121, 20.129, 18.353)
+material = SubResource("StandardMaterial3D_bnlpn")
+
+[node name="CameraGuider" parent="." instance=ExtResource("2_161nh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+follow_parameters/target_offset = Vector3(0, 0, 2)
+
+[node name="Sturgeon" parent="." instance=ExtResource("3_f2g2f")]
+
+[node name="Camera" parent="." instance=ExtResource("3_gu1xy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+fov = 74.9824
+
+[node name="Lights" type="Node3D" parent="."]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.36907, 9.65274, 0)
+light_energy = 2.616
+light_indirect_energy = 9.566
+light_volumetric_fog_energy = 3.909
+omni_range = 10.2
+omni_attenuation = 1.10957
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.355072, -5.99529, -1.41556)
+light_energy = 2.616
+light_indirect_energy = 9.566
+light_volumetric_fog_energy = 3.909
+omni_range = 10.2
+omni_attenuation = 1.10957

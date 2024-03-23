@@ -1,0 +1,9 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://d12d7vr373ff0"]
+
+[ext_resource type="FontFile" uid="uid://c51tyxwsw58my" path="res://Fonts/Comic Papyrus.ttf" id="1_f6fn8"]
+
+[resource]
+default_font = ExtResource("1_f6fn8")
+default_font_size = 100
+/fonts/font_size = ExtResource("1_f6fn8")
+Label/font_sizes/label_font_size = 100

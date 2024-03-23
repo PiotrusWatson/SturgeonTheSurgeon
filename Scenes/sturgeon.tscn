@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://csq1tddsa3c45"]
+
+[ext_resource type="Texture2D" uid="uid://cne7vufhahk2p" path="res://Textures/fish_placeholder.png" id="1_eagv8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cbh3u"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pdedo"]
+albedo_texture = ExtResource("1_eagv8")
+
+[sub_resource type="BoxMesh" id="BoxMesh_6v0my"]
+
+[node name="Sturgeon" type="RigidBody3D"]
+gravity_scale = 0.2
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_cbh3u")
+
+[node name="VisibleTHing" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_pdedo")
+mesh = SubResource("BoxMesh_6v0my")
