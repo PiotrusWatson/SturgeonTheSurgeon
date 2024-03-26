@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://birrcpg1bthuk"]
 
-[ext_resource type="Script" path="res://Scenes/Mover.gd" id="1_slp1k"]
+[ext_resource type="Script" path="res://Components/Mover.gd" id="1_slp1k"]
 
 [node name="Mover" type="Node"]
 script = ExtResource("1_slp1k")

@@ -37,7 +37,7 @@ follow_camera = NodePath("../CameraGuider")
 
 [node name="Camera" parent="." instance=ExtResource("3_gu1xy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
-fov = 74.6299
+fov = 74.0414
 
 [node name="Lights" type="Node3D" parent="."]
 

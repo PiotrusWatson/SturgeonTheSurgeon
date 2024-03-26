@@ -1,12 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://csq1tddsa3c45"]
+[gd_scene load_steps=10 format=3 uid="uid://csq1tddsa3c45"]
 
 [ext_resource type="Script" path="res://Scenes/sturgeon.gd" id="1_c3ufe"]
 [ext_resource type="Texture2D" uid="uid://cne7vufhahk2p" path="res://Textures/fish_placeholder.png" id="1_eagv8"]
 [ext_resource type="PackedScene" uid="uid://birrcpg1bthuk" path="res://Components/mover.tscn" id="3_77bpd"]
 [ext_resource type="PackedScene" uid="uid://la15vt1ws7tr" path="res://Components/timed_thruster.tscn" id="4_efxge"]
 [ext_resource type="PackedScene" uid="uid://cxo0nneq4adef" path="res://Components/follow_camera_manager.tscn" id="5_77in5"]
-[ext_resource type="Script" path="res://Scenes/Rotator.gd" id="6_gkdny"]
-[ext_resource type="Texture2D" uid="uid://dtym780pdobgk" path="res://Textures/crosshair_placeholder.png" id="6_j7ulq"]
+[ext_resource type="PackedScene" uid="uid://p3mrxjkdwipd" path="res://Components/crosshair_pivot.tscn" id="6_ncisv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ea0ty"]
 
@@ -35,11 +34,4 @@ rotation_speed = 1
 
 [node name="FollowCameraManager" parent="." instance=ExtResource("5_77in5")]
 
-[node name="CrosshairPivot" type="Node3D" parent="."]
-script = ExtResource("6_gkdny")
-
-[node name="Crosshair" type="Sprite3D" parent="CrosshairPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.08)
-texture = ExtResource("6_j7ulq")
-
-[connection signal="rotated" from="CrosshairPivot" to="." method="_on_crosshair_pivot_rotated"]
+[node name="CrosshairPivot" parent="." instance=ExtResource("6_ncisv")]

@@ -22,6 +22,7 @@ func _ready():
 	mover._setup(self)
 	timed_thruster._setup(self, self)
 	follow_camera_manager._setup(follow_camera)
+	crosshair._setup()
 
 func _process(delta):
 	crosshair.rotate_in_direction(rotation_direction)
