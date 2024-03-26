@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://csq1tddsa3c45"]
+[gd_scene load_steps=7 format=3 uid="uid://csq1tddsa3c45"]
 
+[ext_resource type="Script" path="res://Scenes/sturgeon.gd" id="1_c3ufe"]
 [ext_resource type="Texture2D" uid="uid://cne7vufhahk2p" path="res://Textures/fish_placeholder.png" id="1_eagv8"]
+[ext_resource type="PackedScene" uid="uid://birrcpg1bthuk" path="res://Components/mover.tscn" id="3_77bpd"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cbh3u"]
 
@@ -11,6 +13,7 @@ albedo_texture = ExtResource("1_eagv8")
 
 [node name="Sturgeon" type="RigidBody3D"]
 gravity_scale = 0.2
+script = ExtResource("1_c3ufe")
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_cbh3u")
@@ -18,3 +21,6 @@ shape = SubResource("BoxShape3D_cbh3u")
 [node name="VisibleTHing" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_pdedo")
 mesh = SubResource("BoxMesh_6v0my")
+
+[node name="Mover" parent="." instance=ExtResource("3_77bpd")]
+rotation_speed = 1
