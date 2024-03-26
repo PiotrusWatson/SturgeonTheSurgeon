@@ -55,6 +55,6 @@ func is_movement_action_pressed(event) -> bool:
 func update_mouse_stick_bounds():
 	var viewport_size = get_viewport().get_visible_rect().size
 	mouse_joystick.update_size(viewport_size)
-
+ 
 func _on_rotator_rotated(amount):
 	follow_camera_manager.rotate_camera(amount)
