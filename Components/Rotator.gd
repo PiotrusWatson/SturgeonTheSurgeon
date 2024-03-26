@@ -1,16 +1,21 @@
 extends Node3D
+class_name Rotator
 
 @export var rotation_speed = 1.0
-@onready var crosshair_location = $Crosshair
+
 var rotation_x = 0
 var rotation_y = 0
 const RIGHT_ANGLE_RADIANS = 1.5708
 var body: Node3D
 
 signal rotated(amount: Vector2)
-func _setup(thing_to_rotate = self):
+
+
+func _setup(thing_to_rotate):
 	body = thing_to_rotate
-	top_level = true
+
+func rotate_towards(target: Node3D):
+	body.look_at(target.global_position)
 
 func rotate_in_direction(direction: Vector2, delta = 1):
 	var x_direction = direction.x * rotation_speed * delta
@@ -23,6 +28,6 @@ func rotate_in_direction(direction: Vector2, delta = 1):
 		y_direction = 0
 	rotation_y += y_direction
 	
-	rotate_y(x_direction)
-	rotate_x(y_direction)
+	body.rotate_y(x_direction)
+	body.rotate_x(y_direction)
 	rotated.emit(direction * rotation_speed * delta)

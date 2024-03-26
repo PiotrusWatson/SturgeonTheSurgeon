@@ -1,6 +1,6 @@
 extends RigidBody3D
 
-@onready var mover = $Mover
+@onready var rotator = $Rotator
 @onready var timed_thruster = $TimedThruster
 @onready var follow_camera_manager = $FollowCameraManager
 @onready var crosshair = $CrosshairPivot
@@ -19,15 +19,12 @@ func _ready():
 	get_tree().get_root().size_changed.connect(update_mouse_stick_bounds)
 	mouse_joystick = MouseJoystick.new(viewport_size, mouse_stick_dead_zone)
 	
-	mover._setup(self)
+	rotator._setup(self)
 	timed_thruster._setup(self, self)
 	follow_camera_manager._setup(follow_camera)
-	crosshair._setup()
 
-func _process(delta):
-	crosshair.rotate_in_direction(rotation_direction)
 func _physics_process(delta):
-	mover.rotate_towards(crosshair.crosshair_location)
+	rotator.rotate_in_direction(rotation_direction, delta)
 	if is_swimming:
 		timed_thruster.constant_thrust(delta)
 	
@@ -59,5 +56,7 @@ func update_mouse_stick_bounds():
 	var viewport_size = get_viewport().get_visible_rect().size
 	mouse_joystick.update_size(viewport_size)
 
-func _on_crosshair_pivot_rotated(amount):
+
+
+func _on_rotator_rotated(amount):
 	follow_camera_manager.rotate_camera(amount)

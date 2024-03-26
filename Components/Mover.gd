@@ -13,8 +13,7 @@ func _setup(body: RigidBody3D):
 func move(desired_direction: Vector3):
 	rigidbody.apply_central_force(desired_direction * speed)
 
-func rotate_towards(target: Node3D):
-	rigidbody.look_at(target.global_position)
+
 
 
 

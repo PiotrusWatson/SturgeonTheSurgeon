@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://p3mrxjkdwipd"]
 
-[ext_resource type="Script" path="res://Components/Rotator.gd" id="1_bfq2u"]
+[ext_resource type="Script" path="res://Components/crosshair_pivot.gd" id="1_qwvhl"]
 [ext_resource type="Texture2D" uid="uid://dtym780pdobgk" path="res://Textures/crosshair_placeholder.png" id="2_m656i"]
 
 [node name="CrosshairPivot" type="Node3D"]
-script = ExtResource("1_bfq2u")
+script = ExtResource("1_qwvhl")
 
 [node name="Crosshair" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.08)
