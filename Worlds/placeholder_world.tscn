@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://br6001rkvol02"]
+[gd_scene load_steps=8 format=3 uid="uid://br6001rkvol02"]
 
 [ext_resource type="Script" path="res://Scripts/signals.gd" id="1_7mlbk"]
 [ext_resource type="PackedScene" uid="uid://djxtqs8xsdhl1" path="res://Scenes/camera_guider.tscn" id="2_161nh"]
 [ext_resource type="PackedScene" uid="uid://csq1tddsa3c45" path="res://Scenes/sturgeon.tscn" id="3_f2g2f"]
 [ext_resource type="PackedScene" uid="uid://dt85vuq8yhkxm" path="res://Scenes/camera.tscn" id="3_gu1xy"]
+[ext_resource type="PackedScene" uid="uid://p3mrxjkdwipd" path="res://Components/crosshair_pivot.tscn" id="4_45ehd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hfutf"]
 
@@ -35,9 +36,11 @@ follow_parameters/damping_value = 10.0
 [node name="Sturgeon" parent="." node_paths=PackedStringArray("follow_camera") instance=ExtResource("3_f2g2f")]
 follow_camera = NodePath("../CameraGuider")
 
+[node name="CrosshairPivot" parent="." instance=ExtResource("4_45ehd")]
+
 [node name="Camera" parent="." instance=ExtResource("3_gu1xy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
-fov = 73.7573
+fov = 74.3377
 
 [node name="Lights" type="Node3D" parent="."]
 

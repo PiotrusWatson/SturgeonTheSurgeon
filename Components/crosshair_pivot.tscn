@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Components/crosshair_pivot.gd" id="1_qwvhl"]
 [ext_resource type="Texture2D" uid="uid://dtym780pdobgk" path="res://Textures/crosshair_placeholder.png" id="2_m656i"]
 
-[node name="CrosshairPivot" type="Node3D"]
+[node name="CrosshairPivot" type="RemoteTransform3D"]
 script = ExtResource("1_qwvhl")
 
 [node name="Crosshair" type="Sprite3D" parent="."]

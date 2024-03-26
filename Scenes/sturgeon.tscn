@@ -19,6 +19,7 @@ gravity_scale = 0.0
 linear_damp = 16.162
 angular_damp = 13.131
 script = ExtResource("1_c3ufe")
+crosshair_prefab = ExtResource("6_ncisv")
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_ea0ty")
@@ -30,8 +31,6 @@ mesh = SubResource("BoxMesh_jo3qx")
 [node name="TimedThruster" parent="." instance=ExtResource("4_efxge")]
 
 [node name="FollowCameraManager" parent="." instance=ExtResource("5_77in5")]
-
-[node name="CrosshairPivot" parent="." instance=ExtResource("6_ncisv")]
 
 [node name="Rotator" parent="." instance=ExtResource("7_8x3pv")]
 

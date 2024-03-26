@@ -3,11 +3,13 @@ extends RigidBody3D
 @onready var rotator = $Rotator
 @onready var timed_thruster = $TimedThruster
 @onready var follow_camera_manager = $FollowCameraManager
-@onready var crosshair = $CrosshairPivot
 @export var mouse_stick_dead_zone = 0.2
 @export var follow_camera: PhantomCamera3D
+@export var crosshair_prefab: PackedScene
 
+var crosshair: CrosshairPivot
 var mouse_joystick: MouseJoystick
+var spawning_helper: SpawningHelper
 var rotation_direction = Vector2.ZERO
 var is_swimming = false
 
@@ -18,10 +20,13 @@ func _ready():
 	var viewport_size = get_viewport().get_visible_rect().size
 	get_tree().get_root().size_changed.connect(update_mouse_stick_bounds)
 	mouse_joystick = MouseJoystick.new(viewport_size, mouse_stick_dead_zone)
-	
+	spawning_helper = SpawningHelper.new(get_tree().get_root())
 	rotator._setup(self)
 	timed_thruster._setup(self, self)
 	follow_camera_manager._setup(follow_camera)
+	
+	crosshair = spawning_helper.spawn_globally_at_point(crosshair_prefab, global_position)
+	crosshair.remote_path = get_path()
 
 func _physics_process(delta):
 	rotator.rotate_in_direction(rotation_direction, delta)
