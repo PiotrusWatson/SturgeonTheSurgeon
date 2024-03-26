@@ -5,6 +5,7 @@ extends RigidBody3D
 @onready var follow_camera_manager = $FollowCameraManager
 @export var mouse_stick_dead_zone = 0.2
 @export var follow_camera: PhantomCamera3D
+@export var place_to_spawn_crosshair: Node
 @export var crosshair_prefab: PackedScene
 
 var crosshair: CrosshairPivot
@@ -20,16 +21,23 @@ func _ready():
 	var viewport_size = get_viewport().get_visible_rect().size
 	get_tree().get_root().size_changed.connect(update_mouse_stick_bounds)
 	mouse_joystick = MouseJoystick.new(viewport_size, mouse_stick_dead_zone)
-	spawning_helper = SpawningHelper.new(get_tree().get_root())
+	spawning_helper = SpawningHelper.new(place_to_spawn_crosshair)
 	rotator._setup(self)
 	timed_thruster._setup(self, self)
 	follow_camera_manager._setup(follow_camera)
 	
 	crosshair = spawning_helper.spawn_globally_at_point(crosshair_prefab, global_position)
 	crosshair.remote_path = get_path()
+	#this timer is needed to make the follow camera not throw a hissy :)
+	await get_tree().create_timer(0.1).timeout
+
+func _process(delta):
+	crosshair.rotate_in_direction(rotation_direction, delta)
+	follow_camera_manager.rotate_to_follow_object(crosshair)
+	
 
 func _physics_process(delta):
-	rotator.rotate_in_direction(rotation_direction, delta)
+	rotator.rotate_towards(crosshair.crosshair_location)
 	if is_swimming:
 		timed_thruster.constant_thrust(delta)
 	
@@ -60,6 +68,4 @@ func is_movement_action_pressed(event) -> bool:
 func update_mouse_stick_bounds():
 	var viewport_size = get_viewport().get_visible_rect().size
 	mouse_joystick.update_size(viewport_size)
- 
-func _on_rotator_rotated(amount):
-	follow_camera_manager.rotate_camera(amount)
+

@@ -31,6 +31,7 @@ mesh = SubResource("BoxMesh_jo3qx")
 [node name="TimedThruster" parent="." instance=ExtResource("4_efxge")]
 
 [node name="FollowCameraManager" parent="." instance=ExtResource("5_77in5")]
+damping_amount = 5.0
 
 [node name="Rotator" parent="." instance=ExtResource("7_8x3pv")]
 
