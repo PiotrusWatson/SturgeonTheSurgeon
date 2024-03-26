@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://csq1tddsa3c45"]
+[gd_scene load_steps=10 format=3 uid="uid://csq1tddsa3c45"]
 
 [ext_resource type="Script" path="res://Scenes/sturgeon.gd" id="1_c3ufe"]
 [ext_resource type="Texture2D" uid="uid://cne7vufhahk2p" path="res://Textures/fish_placeholder.png" id="1_eagv8"]
-[ext_resource type="PackedScene" uid="uid://birrcpg1bthuk" path="res://Components/mover.tscn" id="3_77bpd"]
 [ext_resource type="PackedScene" uid="uid://la15vt1ws7tr" path="res://Components/timed_thruster.tscn" id="4_efxge"]
 [ext_resource type="PackedScene" uid="uid://cxo0nneq4adef" path="res://Components/follow_camera_manager.tscn" id="5_77in5"]
 [ext_resource type="PackedScene" uid="uid://p3mrxjkdwipd" path="res://Components/crosshair_pivot.tscn" id="6_ncisv"]
@@ -27,9 +26,6 @@ shape = SubResource("BoxShape3D_ea0ty")
 [node name="VisibleTHing" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_pdedo")
 mesh = SubResource("BoxMesh_jo3qx")
-
-[node name="Mover" parent="." instance=ExtResource("3_77bpd")]
-rotation_speed = 1
 
 [node name="TimedThruster" parent="." instance=ExtResource("4_efxge")]
 
