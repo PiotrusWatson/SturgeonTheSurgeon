@@ -28,13 +28,16 @@ material = SubResource("StandardMaterial3D_bnlpn")
 
 [node name="CameraGuider" parent="." instance=ExtResource("2_161nh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
-follow_parameters/target_offset = Vector3(0, 0, 2)
+follow_parameters/spring_arm/spring_length = 3.0
+follow_parameters/damping = true
+follow_parameters/damping_value = 10.0
 
-[node name="Sturgeon" parent="." instance=ExtResource("3_f2g2f")]
+[node name="Sturgeon" parent="." node_paths=PackedStringArray("follow_camera") instance=ExtResource("3_f2g2f")]
+follow_camera = NodePath("../CameraGuider")
 
 [node name="Camera" parent="." instance=ExtResource("3_gu1xy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
-fov = 74.9762
+fov = 74.6299
 
 [node name="Lights" type="Node3D" parent="."]
 

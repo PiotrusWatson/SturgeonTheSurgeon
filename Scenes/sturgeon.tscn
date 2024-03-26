@@ -1,26 +1,36 @@
-[gd_scene load_steps=7 format=3 uid="uid://csq1tddsa3c45"]
+[gd_scene load_steps=9 format=3 uid="uid://csq1tddsa3c45"]
 
 [ext_resource type="Script" path="res://Scenes/sturgeon.gd" id="1_c3ufe"]
 [ext_resource type="Texture2D" uid="uid://cne7vufhahk2p" path="res://Textures/fish_placeholder.png" id="1_eagv8"]
 [ext_resource type="PackedScene" uid="uid://birrcpg1bthuk" path="res://Components/mover.tscn" id="3_77bpd"]
+[ext_resource type="PackedScene" uid="uid://la15vt1ws7tr" path="res://Components/timed_thruster.tscn" id="4_efxge"]
+[ext_resource type="PackedScene" uid="uid://cxo0nneq4adef" path="res://Components/follow_camera_manager.tscn" id="5_77in5"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_cbh3u"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_ea0ty"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pdedo"]
 albedo_texture = ExtResource("1_eagv8")
 
-[sub_resource type="BoxMesh" id="BoxMesh_6v0my"]
+[sub_resource type="BoxMesh" id="BoxMesh_jo3qx"]
 
 [node name="Sturgeon" type="RigidBody3D"]
-gravity_scale = 0.2
+gravity_scale = 0.0
+linear_damp = 16.162
+angular_damp = 13.131
 script = ExtResource("1_c3ufe")
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_cbh3u")
+shape = SubResource("BoxShape3D_ea0ty")
 
 [node name="VisibleTHing" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_pdedo")
-mesh = SubResource("BoxMesh_6v0my")
+mesh = SubResource("BoxMesh_jo3qx")
 
 [node name="Mover" parent="." instance=ExtResource("3_77bpd")]
 rotation_speed = 1
+
+[node name="TimedThruster" parent="." instance=ExtResource("4_efxge")]
+
+[node name="FollowCameraManager" parent="." instance=ExtResource("5_77in5")]
+
+[connection signal="rotated" from="Mover" to="." method="_on_mover_rotated"]

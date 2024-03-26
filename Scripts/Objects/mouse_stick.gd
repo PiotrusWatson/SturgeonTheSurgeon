@@ -22,10 +22,12 @@ func get_vector_from_centre(viewport_coordinate: Vector2) -> Vector2:
 func get_new_direction(mouse_pos: Vector2) -> Vector2:
 	var normalised_pos = normalise_mouse_position(mouse_pos)
 	var new_direction = get_vector_from_centre(normalised_pos)
-	return new_direction
+	return new_direction.normalized()
 
 func change_stick_direction(mouse_pos: Vector2):
 	direction = get_new_direction(mouse_pos)
+	if direction.length() < dead_zone:
+		direction = Vector2.ZERO
 
 func get_direction() -> Vector2:
 	return direction

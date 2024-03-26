@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://la15vt1ws7tr"]
+
+[ext_resource type="Script" path="res://Scenes/timed_thruster.gd" id="1_xy1tl"]
+
+[node name="TimedThruster" type="Timer"]
+wait_time = 0.2
+one_shot = true
+script = ExtResource("1_xy1tl")
+
+[node name="Cooldown" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="." to="." method="_on_timeout"]
+[connection signal="timeout" from="Cooldown" to="." method="_on_cooldown_timeout"]
