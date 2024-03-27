@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dtbb65j5p3il1"]
 
-[ext_resource type="Script" path="res://Scripts/scene_changer.gd" id="1_11mxy"]
-[ext_resource type="Script" path="res://Scripts/intro_dialogue.gd" id="1_r342v"]
+[ext_resource type="Script" path="res://Components/scene_changer.gd" id="1_11mxy"]
+[ext_resource type="Script" path="res://Worlds/intro_dialogue.gd" id="1_r342v"]
 [ext_resource type="PackedScene" uid="uid://bxl365ubsd526" path="res://Components/dialogue_player.tscn" id="2_rehjw"]
 
 [node name="IntroDialogue" type="Control"]
