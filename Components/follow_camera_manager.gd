@@ -15,6 +15,4 @@ func rotate_camera(amount):
 	follow_camera.set_third_person_rotation(camera_rotation)
 	
 func rotate_to_follow_object(object: Node3D):
-	var rotation = object.global_rotation
-	var our_rotation = follow_camera.get_third_person_rotation()
-	follow_camera.set_third_person_rotation(lerp(our_rotation, rotation, damp()))
+	follow_camera._follow_spring_arm_node.look_at(object.global_position)

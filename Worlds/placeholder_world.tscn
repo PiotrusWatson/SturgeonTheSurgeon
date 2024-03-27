@@ -39,12 +39,13 @@ place_to_spawn_crosshair = NodePath("../SpawnedItems")
 
 [node name="Camera" parent="." instance=ExtResource("3_gu1xy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 3)
-fov = 74.4626
+fov = 73.9923
 
 [node name="Lights" type="Node3D" parent="."]
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.36907, 9.65274, 0)
+light_color = Color(0, 1, 1, 1)
 light_energy = 2.616
 light_indirect_energy = 9.566
 light_volumetric_fog_energy = 3.909
@@ -53,6 +54,7 @@ omni_attenuation = 1.10957
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.355072, -5.99529, -1.41556)
+light_color = Color(1, 0, 0, 1)
 light_energy = 2.616
 light_indirect_energy = 9.566
 light_volumetric_fog_energy = 3.909

@@ -23,9 +23,6 @@ func rotate_in_direction(direction: Vector2, delta = 1):
 	rotation_x += x_direction
 	
 	var y_direction = -direction.y * rotation_speed * delta
-	#clamp to make sure we don't go too high up or down??
-	if abs(rotation_y + y_direction) > RIGHT_ANGLE_RADIANS:
-		y_direction = 0
 	rotation_y += y_direction
 	
 	body.rotate_y(x_direction)

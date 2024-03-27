@@ -29,6 +29,7 @@ material_override = SubResource("StandardMaterial3D_pdedo")
 mesh = SubResource("BoxMesh_jo3qx")
 
 [node name="TimedThruster" parent="." instance=ExtResource("4_efxge")]
+thrust_strength = 40.0
 
 [node name="FollowCameraManager" parent="." instance=ExtResource("5_77in5")]
 damping_amount = 5.0

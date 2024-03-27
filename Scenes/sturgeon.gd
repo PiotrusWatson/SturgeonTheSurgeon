@@ -33,7 +33,7 @@ func _ready():
 
 func _process(delta):
 	crosshair.rotate_in_direction(rotation_direction, delta)
-	follow_camera_manager.rotate_to_follow_object(crosshair)
+	follow_camera_manager.rotate_to_follow_object(crosshair.crosshair_location)
 	
 
 func _physics_process(delta):
