@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://csq1tddsa3c45"]
+[gd_scene load_steps=12 format=3 uid="uid://csq1tddsa3c45"]
 
 [ext_resource type="Script" path="res://Scenes/sturgeon.gd" id="1_c3ufe"]
 [ext_resource type="Texture2D" uid="uid://cne7vufhahk2p" path="res://Textures/fish_placeholder.png" id="1_eagv8"]
@@ -14,7 +14,13 @@ albedo_texture = ExtResource("1_eagv8")
 
 [sub_resource type="BoxMesh" id="BoxMesh_jo3qx"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_ywsde"]
+radius = 0.7
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tgwmw"]
+
 [node name="Sturgeon" type="RigidBody3D"]
+collision_mask = 3
 gravity_scale = 0.0
 linear_damp = 16.162
 angular_damp = 13.131
@@ -37,4 +43,32 @@ damping_amount = 5.0
 
 [node name="Rotator" parent="." instance=ExtResource("7_8x3pv")]
 
+[node name="MouthRadius" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.569489)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MouthRadius"]
+shape = SubResource("SphereShape3D_ywsde")
+
+[node name="MouthPoint" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7826)
+mass = 0.9
+gravity_scale = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MouthPoint"]
+shape = SubResource("SphereShape3D_tgwmw")
+
+[node name="MouthBodyAttachment" type="Generic6DOFJoint3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.412901, -0.623452)
+node_a = NodePath("..")
+node_b = NodePath("../MouthPoint")
+linear_limit_x/softness = 1.0
+linear_limit_y/softness = 1.0
+linear_limit_z/softness = 1.0
+angular_limit_x/softness = 1.0
+angular_limit_y/softness = 1.0
+angular_limit_z/softness = 1.0
+
 [connection signal="rotated" from="Rotator" to="." method="_on_rotator_rotated"]
+[connection signal="body_entered" from="MouthRadius" to="." method="_on_mouth_body_entered"]

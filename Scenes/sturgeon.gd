@@ -3,6 +3,7 @@ extends RigidBody3D
 @onready var rotator = $Rotator
 @onready var timed_thruster = $TimedThruster
 @onready var follow_camera_manager = $FollowCameraManager
+@onready var mouth_point = $MouthPoint
 @export var mouse_stick_dead_zone = 0.2
 @export var follow_camera: PhantomCamera3D
 @export var place_to_spawn_crosshair: Node
@@ -13,8 +14,11 @@ var mouse_joystick: MouseJoystick
 var spawning_helper: SpawningHelper
 var rotation_direction = Vector2.ZERO
 var is_swimming = false
+var holding_item = false
 
 var movement_inputs = ["Up", "Down", "Left", "Right"]
+
+signal camera_activated(name)
 func _ready():
 	#this lil code makes the internal code for getting the mouse's postion
 	#update its maths when we change the size of the screen so it doesnt break :)
@@ -30,6 +34,7 @@ func _ready():
 	crosshair.remote_path = get_path()
 	#this timer is needed to make the follow camera not throw a hissy :)
 	await get_tree().create_timer(0.1).timeout
+	camera_activated.emit("CameraGuider")
 
 func _process(delta):
 	crosshair.rotate_in_direction(rotation_direction, delta)
@@ -50,7 +55,12 @@ func _unhandled_input(event):
 	#or slow thrust on hold
 	elif event.is_action_pressed("Thrust"):
 		is_swimming = true
-	
+		
+	if event.is_action_pressed("LookBack"):
+		camera_activated.emit("ReverseCamera")
+	elif event.is_action_released("LookBack"):
+		camera_activated.emit("CameraGuider")
+		
 	if event is InputEventMouseMotion:
 		mouse_joystick.change_stick_direction(event.position)
 		rotation_direction = mouse_joystick.get_direction()
@@ -69,3 +79,7 @@ func update_mouse_stick_bounds():
 	var viewport_size = get_viewport().get_visible_rect().size
 	mouse_joystick.update_size(viewport_size)
 
+func _on_mouth_body_entered(body):
+	if body.has_method("attach") and !holding_item:
+		body.attach(mouth_point)
+		holding_item = true

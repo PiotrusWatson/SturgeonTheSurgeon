@@ -1,9 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://br6001rkvol02"]
+[gd_scene load_steps=13 format=3 uid="uid://br6001rkvol02"]
 
 [ext_resource type="Script" path="res://Scripts/signals.gd" id="1_7mlbk"]
+[ext_resource type="Script" path="res://Worlds/generic_tool.gd" id="2_6rfh6"]
 [ext_resource type="PackedScene" uid="uid://djxtqs8xsdhl1" path="res://Scenes/camera_guider.tscn" id="2_161nh"]
+[ext_resource type="Script" path="res://Worlds/attacher.gd" id="2_q2euw"]
 [ext_resource type="PackedScene" uid="uid://csq1tddsa3c45" path="res://Scenes/sturgeon.tscn" id="3_f2g2f"]
 [ext_resource type="PackedScene" uid="uid://dt85vuq8yhkxm" path="res://Scenes/camera.tscn" id="3_gu1xy"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3D.gd" id="4_8y2pd"]
+[ext_resource type="Script" path="res://Worlds/phantom_camera_manager.gd" id="6_xp0ch"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vmjpd"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jqfnm"]
+size = Vector3(0.25, 0.25, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hfutf"]
 
@@ -13,6 +22,27 @@ albedo_color = Color(1, 0.0901961, 1, 1)
 [node name="PlaceholderWorld" type="Node3D"]
 script = ExtResource("1_7mlbk")
 
+[node name="Tool" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0240352, 0.0494072, 4.85579)
+collision_layer = 2
+collision_mask = 2
+mass = 0.1
+gravity_scale = 0.2
+script = ExtResource("2_6rfh6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Tool"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 1, 0, -0.24562, 0)
+mesh = SubResource("BoxMesh_vmjpd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Tool"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.245056, 0)
+shape = SubResource("BoxShape3D_jqfnm")
+
+[node name="Attacher" type="Generic6DOFJoint3D" parent="Tool"]
+transform = Transform3D(0.127705, 0, 0.991812, 0, 1, 0, -0.991812, 0, 0.127705, 0, -0.223753, -0.526953)
+node_a = NodePath("..")
+script = ExtResource("2_q2euw")
+
 [node name="Landscape" type="CSGCombiner3D" parent="."]
 use_collision = true
 
@@ -21,25 +51,19 @@ size = Vector3(25, 25, 25)
 material = SubResource("StandardMaterial3D_hfutf")
 
 [node name="InnerWalls" type="CSGBox3D" parent="Landscape"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.60925, 0.879303, 0.15152)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.60925, 4.66559, -0.791772)
 operation = 2
-size = Vector3(20.6121, 20.129, 18.353)
+size = Vector3(20.6121, 12.5564, 16.4664)
 material = SubResource("StandardMaterial3D_bnlpn")
 
-[node name="CameraGuider" parent="." instance=ExtResource("2_161nh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 3)
-follow_parameters/spring_arm/spring_length = 3.0
-follow_parameters/target_offset = Vector3(0.5, 0, 0)
-follow_parameters/damping = true
-follow_parameters/damping_value = 37.27
-
 [node name="Sturgeon" parent="." node_paths=PackedStringArray("follow_camera", "place_to_spawn_crosshair") instance=ExtResource("3_f2g2f")]
-follow_camera = NodePath("../CameraGuider")
+collision_mask = 7
+follow_camera = NodePath("../PhantomCameras/CameraGuider")
 place_to_spawn_crosshair = NodePath("../SpawnedItems")
 
 [node name="Camera" parent="." instance=ExtResource("3_gu1xy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 3)
-fov = 73.9923
+transform = Transform3D(-0.992953, 0, 0.118508, 0, 1, 0, -0.118508, 0, -0.992953, 0.474032, 0, -3.97181)
+fov = 74.7316
 
 [node name="Lights" type="Node3D" parent="."]
 
@@ -53,7 +77,7 @@ omni_range = 10.2
 omni_attenuation = 1.10957
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="Lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.355072, -5.99529, -1.41556)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.355072, -0.832555, -1.41556)
 light_color = Color(1, 0, 0, 1)
 light_energy = 2.616
 light_indirect_energy = 9.566
@@ -62,3 +86,33 @@ omni_range = 10.2
 omni_attenuation = 1.10957
 
 [node name="SpawnedItems" type="Node" parent="."]
+
+[node name="PhantomCameras" type="Node" parent="."]
+script = ExtResource("6_xp0ch")
+
+[node name="ReverseCamera" type="Node3D" parent="PhantomCameras"]
+transform = Transform3D(-0.992953, 0, 0.118508, 0, 1, 0, -0.118508, 0, -0.992953, 0.474032, 0, -3.97181)
+script = ExtResource("4_8y2pd")
+priority_override = false
+priority = 0
+follow_mode = 6
+follow_target = NodePath("../../Sturgeon")
+follow_parameters/spring_arm/spring_length = 4.0
+follow_parameters/spring_arm/collision_mask = 1
+follow_parameters/spring_arm/shape = null
+follow_parameters/spring_arm/margin = 0.01
+follow_parameters/target_offset = Vector3(0, 0, 0)
+follow_parameters/damping = false
+look_at_mode = 0
+tween_parameters = null
+tween_on_load = true
+inactive_update_mode = 0
+camera_3D_resource = null
+
+[node name="CameraGuider" parent="PhantomCameras" instance=ExtResource("2_161nh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 3)
+follow_target = NodePath("../../Sturgeon")
+follow_parameters/spring_arm/spring_length = 3.0
+follow_parameters/target_offset = Vector3(0.5, 0, 0)
+follow_parameters/damping = true
+follow_parameters/damping_value = 37.27
