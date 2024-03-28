@@ -1,4 +1,4 @@
-extends Joint3D
+extends Generic6DOFJoint3D
 class_name Attacher
 
 var rigidbody: RigidBody3D
@@ -9,9 +9,10 @@ func _setup(body: RigidBody3D):
 
 func attach(other: RigidBody3D):
 	#rigidbody.global_position = other.global_position
-	#rigidbody.rotation = Vector3.ZERO
+	#rigidbody.rotate_x(90)
 	node_b = other.get_path()
-	#rigidbody.global_position = other.global_position
+	rigidbody.global_position = other.global_position
+	
 	
 	
 
