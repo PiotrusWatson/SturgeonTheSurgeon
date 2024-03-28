@@ -1,4 +1,4 @@
-extends Generic6DOFJoint3D
+extends JoltGeneric6DOFJoint3D
 class_name Attacher
 
 var rigidbody: RigidBody3D
@@ -11,9 +11,8 @@ func _setup(body: RigidBody3D):
 
 func attach(other: RigidBody3D):
 	node_b = other.get_path()
-	toggle_linear_spring(true)
 	toggle_linear_limit(true)
-	#await get_tree().create_timer(0.05).timeout
+	toggle_angular_limit(true)
 	
 	
 func toggle_linear_limit(is_on: bool):

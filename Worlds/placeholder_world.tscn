@@ -38,15 +38,18 @@ mesh = SubResource("BoxMesh_vmjpd")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.245056, 0)
 shape = SubResource("BoxShape3D_jqfnm")
 
-[node name="Attacher" type="Generic6DOFJoint3D" parent="Tool"]
-transform = Transform3D(0.127705, 0, 0.991812, 0, 1, 0, -0.991812, 0, 0.127705, 0, -0.223753, -0.526953)
-node_a = NodePath("..")
+[node name="Attacher" type="JoltGeneric6DOFJoint3D" parent="Tool"]
 linear_limit_x/enabled = false
 linear_limit_y/enabled = false
 linear_limit_z/enabled = false
-angular_limit_x/enabled = false
-angular_limit_y/enabled = false
-angular_limit_z/enabled = false
+linear_limit_spring_x/enabled = true
+linear_limit_spring_x/frequency = 100.0
+linear_limit_spring_y/enabled = true
+linear_limit_spring_y/frequency = 100.0
+linear_limit_spring_z/enabled = true
+linear_limit_spring_z/frequency = 100.0
+node_a = NodePath("..")
+transform = Transform3D(0.127705, 0, 0.991812, 0, 1, 0, -0.991812, 0, 0.127705, 0, -0.223753, -0.526953)
 script = ExtResource("2_q2euw")
 
 [node name="Landscape" type="CSGCombiner3D" parent="."]
@@ -70,7 +73,7 @@ place_to_spawn_crosshair = NodePath("../SpawnedItems")
 
 [node name="Camera" parent="." instance=ExtResource("3_gu1xy")]
 transform = Transform3D(-0.992953, 0, 0.118508, 0, 1, 0, -0.118508, 0, -0.992953, 0.474032, 0, -3.97181)
-fov = 74.9411
+fov = 74.2346
 
 [node name="Lights" type="Node3D" parent="."]
 

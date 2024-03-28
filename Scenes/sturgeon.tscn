@@ -54,22 +54,21 @@ shape = SubResource("SphereShape3D_ywsde")
 
 [node name="MouthPoint" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.446997, -0.579377)
+collision_layer = 4
+collision_mask = 4
 mass = 0.9
 gravity_scale = 0.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MouthPoint"]
 shape = SubResource("SphereShape3D_tgwmw")
 
-[node name="MouthBodyAttachment" type="Generic6DOFJoint3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.460114, -0.623452)
+[node name="MouthBodyAttachment" type="JoltGeneric6DOFJoint3D" parent="."]
+linear_limit_spring_x/enabled = true
+linear_limit_spring_y/enabled = true
+linear_limit_spring_z/enabled = true
 node_a = NodePath("..")
 node_b = NodePath("../MouthPoint")
-linear_limit_x/softness = 1.0
-linear_limit_y/softness = 1.0
-linear_limit_z/softness = 1.0
-angular_limit_x/softness = 1.0
-angular_limit_y/softness = 1.0
-angular_limit_z/softness = 1.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.460114, -0.623452)
 
 [connection signal="rotated" from="Rotator" to="." method="_on_rotator_rotated"]
 [connection signal="body_entered" from="MouthRadius" to="." method="_on_mouth_body_entered"]
