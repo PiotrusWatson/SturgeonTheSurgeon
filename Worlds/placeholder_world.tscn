@@ -65,13 +65,12 @@ size = Vector3(20.6121, 12.5564, 16.4664)
 material = SubResource("StandardMaterial3D_bnlpn")
 
 [node name="Sturgeon" parent="." node_paths=PackedStringArray("follow_camera", "place_to_spawn_crosshair") instance=ExtResource("3_f2g2f")]
-collision_mask = 7
 follow_camera = NodePath("../PhantomCameras/CameraGuider")
 place_to_spawn_crosshair = NodePath("../SpawnedItems")
 
 [node name="Camera" parent="." instance=ExtResource("3_gu1xy")]
 transform = Transform3D(-0.992953, 0, 0.118508, 0, 1, 0, -0.118508, 0, -0.992953, 0.474032, 0, -3.97181)
-fov = 73.8344
+fov = 74.9411
 
 [node name="Lights" type="Node3D" parent="."]
 

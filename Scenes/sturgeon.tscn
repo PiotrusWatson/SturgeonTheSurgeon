@@ -20,7 +20,8 @@ radius = 0.7
 [sub_resource type="SphereShape3D" id="SphereShape3D_tgwmw"]
 
 [node name="Sturgeon" type="RigidBody3D"]
-collision_mask = 3
+collision_layer = 4
+collision_mask = 4
 gravity_scale = 0.0
 linear_damp = 16.162
 angular_damp = 13.131
@@ -52,7 +53,7 @@ collision_mask = 2
 shape = SubResource("SphereShape3D_ywsde")
 
 [node name="MouthPoint" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7826)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.446997, -0.579377)
 mass = 0.9
 gravity_scale = 0.0
 
@@ -60,7 +61,7 @@ gravity_scale = 0.0
 shape = SubResource("SphereShape3D_tgwmw")
 
 [node name="MouthBodyAttachment" type="Generic6DOFJoint3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.412901, -0.623452)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.460114, -0.623452)
 node_a = NodePath("..")
 node_b = NodePath("../MouthPoint")
 linear_limit_x/softness = 1.0
