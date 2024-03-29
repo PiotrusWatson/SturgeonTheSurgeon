@@ -5,5 +5,5 @@ extends RigidBody3D
 func _ready():
 	attacher._setup(self)	
 	
-func attach(other: RigidBody3D):
+func attach(other: Node3D):
 	attacher.attach(other)

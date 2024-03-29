@@ -15,6 +15,7 @@ var spawning_helper: SpawningHelper
 var rotation_direction = Vector2.ZERO
 var is_swimming = false
 var holding_item = false
+var held_item
 
 var movement_inputs = ["Up", "Down", "Left", "Right"]
 
@@ -83,3 +84,4 @@ func _on_mouth_body_entered(body):
 	if body.has_method("attach") and !holding_item:
 		body.attach(mouth_point)
 		holding_item = true
+		held_item = body
