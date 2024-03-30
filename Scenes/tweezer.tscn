@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://cf8gmmswfqhdj"]
+
+[ext_resource type="Script" path="res://Scenes/tweezer.gd" id="1_jb81w"]
+[ext_resource type="Script" path="res://Worlds/attacher.gd" id="2_43p7e"]
+[ext_resource type="Script" path="res://Worlds/pickup_handler.gd" id="3_34hxj"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vmjpd"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jqfnm"]
+size = Vector3(0.25, 0.25, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_567gx"]
+
+[node name="Tweezers" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0240352, 0.0494072, 4.85579)
+collision_layer = 2
+collision_mask = 2
+mass = 0.1
+gravity_scale = 0.2
+script = ExtResource("1_jb81w")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_vmjpd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_jqfnm")
+
+[node name="Attacher" type="Node" parent="."]
+script = ExtResource("2_43p7e")
+
+[node name="UsableEnd" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0.577171)
+mesh = SubResource("SphereMesh_567gx")
+
+[node name="PickupManager" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.51154)
+enabled = false
+target_position = Vector3(0, 0, 1)
+script = ExtResource("3_34hxj")

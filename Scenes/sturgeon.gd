@@ -8,7 +8,7 @@ extends RigidBody3D
 @export var follow_camera: PhantomCamera3D
 @export var place_to_spawn_crosshair: Node
 @export var crosshair_prefab: PackedScene
-
+@export var mouse_sensitivity = 0.2
 var crosshair: CrosshairPivot
 var mouse_joystick: MouseJoystick
 var spawning_helper: SpawningHelper
@@ -25,18 +25,14 @@ signal camera_activated(name)
 signal went_in_range_of_attachable
 signal went_out_of_range_of_attachable
 func _ready():
-	#this lil code makes the internal code for getting the mouse's postion
-	#update its maths when we change the size of the screen so it doesnt break :)
-	var viewport_size = get_viewport().get_visible_rect().size
-	get_tree().get_root().size_changed.connect(update_mouse_stick_bounds)
-	mouse_joystick = MouseJoystick.new(viewport_size, mouse_stick_dead_zone)
+	
 	spawning_helper = SpawningHelper.new(place_to_spawn_crosshair)
+	crosshair = spawning_helper.spawn_globally_at_point(crosshair_prefab, global_position)
+	crosshair.remote_path = get_path()
+	
 	rotator._setup(self)
 	timed_thruster._setup(self, self)
 	follow_camera_manager._setup(follow_camera)
-	
-	crosshair = spawning_helper.spawn_globally_at_point(crosshair_prefab, global_position)
-	crosshair.remote_path = get_path()
 	#this timer is needed to make the follow camera not throw a hissy :)
 	await get_tree().create_timer(0.1).timeout
 	camera_activated.emit("CameraGuider")
@@ -53,6 +49,8 @@ func _physics_process(delta):
 	
 #all the inputs are got here :)
 func _unhandled_input(event):
+	
+	handle_mouse_mode(event)
 	#either big thrust on release
 	if event.is_action_released("Thrust"):
 		timed_thruster.begin_thrust()
@@ -71,9 +69,14 @@ func _unhandled_input(event):
 	elif event.is_action_released("Hold") and holding_item:
 		drop_item()
 		
-	if event is InputEventMouseMotion:
-		mouse_joystick.change_stick_direction(event.position)
-		rotation_direction = mouse_joystick.get_direction()
+	if event.is_action_pressed("Use") and holding_item:
+		held_item.use()
+	elif event.is_action_released("Use") and holding_item:
+		held_item.alt_use()
+		
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		#mouse_joystick.change_stick_direction(event.relative)
+		rotation_direction = event.relative * mouse_sensitivity
 	elif is_movement_action_pressed(event):
 		var horizontal = Input.get_axis("Right", "Left")
 		var vertical = Input.get_axis("Down", "Up")
@@ -84,10 +87,6 @@ func is_movement_action_pressed(event) -> bool:
 		if event.is_action_pressed(input_string):
 			return true
 	return false
-	
-func update_mouse_stick_bounds():
-	var viewport_size = get_viewport().get_visible_rect().size
-	mouse_joystick.update_size(viewport_size)
 
 func hold_item():
 	item_i_could_hold.attach(mouth_point)
@@ -98,6 +97,12 @@ func drop_item():
 	held_item.detach()
 	held_item = null
 	holding_item = false
+	
+func handle_mouse_mode(event: InputEvent):
+	if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE and event.is_action_pressed("click"):
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	elif event.is_action_pressed("ui_cancel"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func _on_mouth_body_entered(body):
 	if body.has_method("attach") and !in_range_of_item:

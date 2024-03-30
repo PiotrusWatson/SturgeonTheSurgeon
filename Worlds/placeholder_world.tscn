@@ -1,45 +1,32 @@
 [gd_scene load_steps=14 format=3 uid="uid://br6001rkvol02"]
 
 [ext_resource type="Script" path="res://Scripts/signals.gd" id="1_7mlbk"]
-[ext_resource type="Script" path="res://Worlds/generic_tool.gd" id="2_6rfh6"]
 [ext_resource type="PackedScene" uid="uid://djxtqs8xsdhl1" path="res://Scenes/camera_guider.tscn" id="2_161nh"]
-[ext_resource type="Script" path="res://Worlds/attacher.gd" id="2_q2euw"]
+[ext_resource type="PackedScene" uid="uid://cf8gmmswfqhdj" path="res://Scenes/tweezer.tscn" id="2_en6p3"]
 [ext_resource type="PackedScene" uid="uid://csq1tddsa3c45" path="res://Scenes/sturgeon.tscn" id="3_f2g2f"]
 [ext_resource type="PackedScene" uid="uid://dt85vuq8yhkxm" path="res://Scenes/camera.tscn" id="3_gu1xy"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3D.gd" id="4_8y2pd"]
 [ext_resource type="Script" path="res://Worlds/UI.gd" id="5_nh3x6"]
 [ext_resource type="Script" path="res://Worlds/phantom_camera_manager.gd" id="6_xp0ch"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_vmjpd"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_jqfnm"]
-size = Vector3(0.25, 0.25, 1)
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hfutf"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bnlpn"]
 albedo_color = Color(1, 0.0901961, 1, 1)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_flan1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i6yx3"]
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_rwpf7"]
+material = SubResource("StandardMaterial3D_i6yx3")
+
 [node name="PlaceholderWorld" type="Node3D"]
 script = ExtResource("1_7mlbk")
 
-[node name="Tool" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0240352, 0.0494072, 4.85579)
-collision_layer = 2
-collision_mask = 2
-mass = 0.1
-gravity_scale = 0.2
-script = ExtResource("2_6rfh6")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Tool"]
-transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 1, 0, 0, 0)
-mesh = SubResource("BoxMesh_vmjpd")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Tool"]
-shape = SubResource("BoxShape3D_jqfnm")
-
-[node name="Attacher" type="Node" parent="Tool"]
-script = ExtResource("2_q2euw")
+[node name="Tweezers" parent="." instance=ExtResource("2_en6p3")]
 
 [node name="Landscape" type="CSGCombiner3D" parent="."]
 use_collision = true
@@ -80,7 +67,7 @@ text = "Hold E to pick up and hold!"
 
 [node name="Camera" parent="." instance=ExtResource("3_gu1xy")]
 transform = Transform3D(-0.992953, 0, 0.118508, 0, 1, 0, -0.118508, 0, -0.992953, 0.474032, 0, -3.97181)
-fov = 73.8278
+fov = 74.5797
 
 [node name="Lights" type="Node3D" parent="."]
 
@@ -133,3 +120,14 @@ follow_parameters/spring_arm/spring_length = 3.0
 follow_parameters/target_offset = Vector3(0.5, 0, 0)
 follow_parameters/damping = true
 follow_parameters/damping_value = 37.27
+
+[node name="GenericOrgan" type="RigidBody3D" parent="."]
+collision_layer = 5
+collision_mask = 5
+gravity_scale = 0.2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GenericOrgan"]
+shape = SubResource("SphereShape3D_flan1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GenericOrgan"]
+mesh = SubResource("SphereMesh_rwpf7")
