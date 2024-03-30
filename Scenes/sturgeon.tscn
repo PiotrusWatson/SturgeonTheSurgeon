@@ -56,3 +56,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.446997, -0.579377)
 
 [connection signal="rotated" from="Rotator" to="." method="_on_rotator_rotated"]
 [connection signal="body_entered" from="MouthRadius" to="." method="_on_mouth_body_entered"]
+[connection signal="body_exited" from="MouthRadius" to="." method="_on_mouth_radius_body_exited"]

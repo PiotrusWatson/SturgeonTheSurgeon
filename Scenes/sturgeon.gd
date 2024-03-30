@@ -15,11 +15,15 @@ var spawning_helper: SpawningHelper
 var rotation_direction = Vector2.ZERO
 var is_swimming = false
 var holding_item = false
+var in_range_of_item = false
+var item_i_could_hold
 var held_item
 
 var movement_inputs = ["Up", "Down", "Left", "Right"]
 
 signal camera_activated(name)
+signal went_in_range_of_attachable
+signal went_out_of_range_of_attachable
 func _ready():
 	#this lil code makes the internal code for getting the mouse's postion
 	#update its maths when we change the size of the screen so it doesnt break :)
@@ -62,6 +66,11 @@ func _unhandled_input(event):
 	elif event.is_action_released("LookBack"):
 		camera_activated.emit("CameraGuider")
 		
+	if event.is_action_pressed("Hold") and can_hold():
+		hold_item()
+	elif event.is_action_released("Hold") and holding_item:
+		drop_item()
+		
 	if event is InputEventMouseMotion:
 		mouse_joystick.change_stick_direction(event.position)
 		rotation_direction = mouse_joystick.get_direction()
@@ -80,8 +89,28 @@ func update_mouse_stick_bounds():
 	var viewport_size = get_viewport().get_visible_rect().size
 	mouse_joystick.update_size(viewport_size)
 
+func hold_item():
+	item_i_could_hold.attach(mouth_point)
+	held_item = item_i_could_hold
+	holding_item = true
+
+func drop_item():
+	held_item.detach()
+	held_item = null
+	holding_item = false
+
 func _on_mouth_body_entered(body):
-	if body.has_method("attach") and !holding_item:
-		body.attach(mouth_point)
-		holding_item = true
-		held_item = body
+	if body.has_method("attach") and !in_range_of_item:
+		item_i_could_hold = body
+		went_in_range_of_attachable.emit()
+		in_range_of_item = true
+
+
+func _on_mouth_radius_body_exited(body):
+	if body.has_method("attach") and in_range_of_item:
+		item_i_could_hold = null
+		in_range_of_item = false
+		went_out_of_range_of_attachable.emit()
+
+func can_hold():
+	return in_range_of_item and !holding_item

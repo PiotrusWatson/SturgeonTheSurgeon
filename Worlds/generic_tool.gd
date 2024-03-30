@@ -1,5 +1,5 @@
 extends RigidBody3D
-
+class_name Tool
 
 @onready var attacher = $Attacher
 func _ready():
@@ -7,3 +7,5 @@ func _ready():
 	
 func attach(other: Node3D):
 	attacher.attach(other)
+func detach():
+	attacher.detach()
