@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://drbogdlde324f"]
+
+[ext_resource type="Script" path="res://Worlds/generic_tool.gd" id="1_m6g18"]
+[ext_resource type="Script" path="res://Worlds/attacher.gd" id="2_tw2at"]
+[ext_resource type="Script" path="res://Scenes/Cutter.gd" id="3_1jupv"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vmjpd"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jqfnm"]
+size = Vector3(0.25, 0.25, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_567gx"]
+
+[node name="PizzaCutter" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0240352, 0.0494072, 4.85579)
+collision_layer = 2
+collision_mask = 2
+mass = 0.1
+gravity_scale = 0.2
+script = ExtResource("1_m6g18")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_vmjpd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_jqfnm")
+
+[node name="Attacher" type="Node" parent="."]
+script = ExtResource("2_tw2at")
+
+[node name="UsableEnd" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0.577171)
+mesh = SubResource("SphereMesh_567gx")
+
+[node name="Cutter" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.550067)
+target_position = Vector3(0, 0, 0.5)
+script = ExtResource("3_1jupv")

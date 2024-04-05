@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://br6001rkvol02"]
+[gd_scene load_steps=15 format=3 uid="uid://br6001rkvol02"]
 
 [ext_resource type="Script" path="res://Scripts/signals.gd" id="1_7mlbk"]
 [ext_resource type="PackedScene" uid="uid://djxtqs8xsdhl1" path="res://Scenes/camera_guider.tscn" id="2_161nh"]
@@ -8,20 +8,18 @@
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3D.gd" id="4_8y2pd"]
 [ext_resource type="Script" path="res://Worlds/UI.gd" id="5_nh3x6"]
 [ext_resource type="Script" path="res://Worlds/phantom_camera_manager.gd" id="6_xp0ch"]
+[ext_resource type="PackedScene" uid="uid://co46mutgeil2q" path="res://Scenes/generic_organ.tscn" id="9_pi0g3"]
+[ext_resource type="Script" path="res://Worlds/cuttable.gd" id="10_0f1jq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hfutf"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bnlpn"]
 albedo_color = Color(1, 0.0901961, 1, 1)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_flan1"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_6f4tr"]
+size = Vector3(1.97827, 0.0821533, 1.89212)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i6yx3"]
-vertex_color_use_as_albedo = true
-albedo_color = Color(1, 0, 0, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_rwpf7"]
-material = SubResource("StandardMaterial3D_i6yx3")
+[sub_resource type="PlaneMesh" id="PlaneMesh_ytqcl"]
 
 [node name="PlaceholderWorld" type="Node3D"]
 script = ExtResource("1_7mlbk")
@@ -67,7 +65,7 @@ text = "Hold E to pick up and hold!"
 
 [node name="Camera" parent="." instance=ExtResource("3_gu1xy")]
 transform = Transform3D(-0.992953, 0, 0.118508, 0, 1, 0, -0.118508, 0, -0.992953, 0.474032, 0, -3.97181)
-fov = 74.5797
+fov = 74.1425
 
 [node name="Lights" type="Node3D" parent="."]
 
@@ -121,13 +119,19 @@ follow_parameters/target_offset = Vector3(0.5, 0, 0)
 follow_parameters/damping = true
 follow_parameters/damping_value = 37.27
 
-[node name="GenericOrgan" type="RigidBody3D" parent="."]
-collision_layer = 5
-collision_mask = 5
-gravity_scale = 0.2
+[node name="GenericOrgan" parent="." instance=ExtResource("9_pi0g3")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GenericOrgan"]
-shape = SubResource("SphereShape3D_flan1")
+[node name="GenericCuttableObject" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.46537)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="GenericOrgan"]
-mesh = SubResource("SphereMesh_rwpf7")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GenericCuttableObject"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0032959, 0.0233765, -0.00746155)
+shape = SubResource("BoxShape3D_6f4tr")
+
+[node name="Meshes" type="Node3D" parent="GenericCuttableObject"]
+
+[node name="FullMesh" type="MeshInstance3D" parent="GenericCuttableObject/Meshes"]
+mesh = SubResource("PlaneMesh_ytqcl")
+
+[node name="Cuttable" type="Node" parent="GenericCuttableObject"]
+script = ExtResource("10_0f1jq")

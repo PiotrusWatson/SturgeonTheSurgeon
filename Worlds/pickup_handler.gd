@@ -18,10 +18,12 @@ func pick_up(other_object):
 	
 func drop():
 	if !holding_something:
+		enabled = false
 		return
 	holding_something = false
 	held_thing.freeze = false
 	held_thing = null
+	enabled = false
 	
 func try_pick_up():
 	enabled = true

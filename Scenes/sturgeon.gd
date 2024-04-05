@@ -75,7 +75,6 @@ func _unhandled_input(event):
 		held_item.alt_use()
 		
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		#mouse_joystick.change_stick_direction(event.relative)
 		rotation_direction = event.relative * mouse_sensitivity
 	elif is_movement_action_pressed(event):
 		var horizontal = Input.get_axis("Right", "Left")
@@ -97,7 +96,10 @@ func drop_item():
 	held_item.detach()
 	held_item = null
 	holding_item = false
-	
+
+func can_hold():
+	return in_range_of_item and !holding_item
+
 func handle_mouse_mode(event: InputEvent):
 	if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE and event.is_action_pressed("click"):
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -117,5 +119,4 @@ func _on_mouth_radius_body_exited(body):
 		in_range_of_item = false
 		went_out_of_range_of_attachable.emit()
 
-func can_hold():
-	return in_range_of_item and !holding_item
+
